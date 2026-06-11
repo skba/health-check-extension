@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!--
+      The Microsoft.Azure.Cosmos SDK (pulled in transitively via Company.HealthChecks)
+      enforces at build time that Newtonsoft.Json is explicitly referenced. Since this
+      project uses System.Text.Json exclusively, we opt out of that validation.
+      Reference: https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/sdk-dotnet-v3
+    -->
+    <AzureCosmosDisableNewtonsoftJsonCheck>true</AzureCosmosDisableNewtonsoftJsonCheck>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      In your real services, replace this with the NuGet / Azure Artifacts reference:
+        <PackageReference Include="Company.HealthChecks" Version="1.0.0" />
+
+      We use a project reference here so the sample compiles without a feed.
+    -->
+    <ProjectReference Include="..\..\src\Company.HealthChecks\Company.HealthChecks.csproj" />
+  </ItemGroup>
+
+</Project>

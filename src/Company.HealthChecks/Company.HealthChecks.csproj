@@ -1,0 +1,83 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+
+    <!-- NuGet package metadata -->
+    <PackageId>Company.HealthChecks</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Platform Team</Authors>
+    <Company>Company</Company>
+    <Product>Company Microservices Health Checks</Product>
+    <Description>
+      Shared, zero-duplication health check infrastructure for Company microservices.
+      Supports SQL Server, CosmosDB, and Redis. Checks run ON DEMAND only —
+      no background polling. Drop two lines into any service and get three
+      standard HTTP endpoints plus a programmatic runner.
+    </Description>
+    <PackageTags>healthchecks;aspnetcore;microservices;azure;sqlserver;cosmosdb;redis</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://dev.azure.com/company/platform/_git/Company.HealthChecks</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+
+    <!-- Deterministic builds — required for NuGet reproducibility -->
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+
+    <!-- Generate XML docs so IntelliSense works for consumers -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+
+    <!--
+      Suppresses the build error requiring an explicit Newtonsoft.Json reference
+      when the Azure Cosmos DB SDK is present. The CosmosDB health check package
+      (AspNetCore.HealthChecks.CosmosDb) pulls in the Cosmos SDK which triggers
+      this check. Setting this to true opts out of that validation.
+      Reference: https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/sdk-dotnet-v3
+    -->
+    <AzureCosmosDisableNewtonsoftJsonCheck>true</AzureCosmosDisableNewtonsoftJsonCheck>
+  </PropertyGroup>
+
+  <!-- Include the README in the NuGet package (shows on nuget.org / Azure Artifacts) -->
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      ASP.NET Core ships as a shared framework, not individual NuGet packages.
+      FrameworkReference gives this class library access to all ASP.NET Core types:
+        - Microsoft.AspNetCore.Diagnostics.HealthChecks (HealthCheckOptions, MapHealthChecks)
+        - Microsoft.Extensions.Diagnostics.HealthChecks (HealthCheckService, IHealthCheck, HealthReport)
+        - Microsoft.AspNetCore.Http (HttpContext, IResult)
+        - Microsoft.AspNetCore.Builder (WebApplication, IApplicationBuilder)
+      Reference: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/target-aspnetcore
+    -->
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      Community health check provider packages from Xabaril/AspNetCore.Diagnostics.HealthChecks.
+      These implement IHealthCheck for each vendor SDK and are versioned independently
+      of the .NET runtime — version 9.x is compatible with .NET 10.
+      Source: https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks
+    -->
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="9.*" />
+    <PackageReference Include="AspNetCore.HealthChecks.Redis"     Version="9.*" />
+
+    <!--
+      CosmosDB: use the official Microsoft SDK directly instead of the community wrapper.
+      The community package (AspNetCore.HealthChecks.CosmosDb) has unstable extension method
+      signatures across versions. The custom CosmosDbHealthCheck class in this library
+      implements IHealthCheck using CosmosClient directly.
+      SDK reference: https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/sdk-dotnet-v3
+    -->
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.*" />
+  </ItemGroup>
+
+</Project>
