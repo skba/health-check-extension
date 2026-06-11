@@ -5,7 +5,7 @@ namespace Company.HealthChecks.Models;
 /// Only populate the fields relevant to that service's infrastructure.
 /// </summary>
 /// <remarks>
-/// This class is consumed by <see cref="Extensions.HealthCheckExtensions.AddServiceHealthChecks"/>,
+/// This class is consumed by <see cref="Company.HealthChecks.Extensions.HealthCheckExtensions.AddServiceHealthChecks"/>,
 /// which maps the values onto the ASP.NET Core health checks builder.
 /// <para>
 /// Microsoft documentation:

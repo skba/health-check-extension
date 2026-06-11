@@ -33,7 +33,7 @@ internal sealed class HealthCheckRunner : IHealthCheckRunner
 
     /// <inheritdoc/>
     /// <remarks>
-    /// Calls <see cref="HealthCheckService.CheckHealthAsync(CancellationToken)"/> with no predicate,
+    /// Calls <c>HealthCheckService.CheckHealthAsync(CancellationToken)</c> with no predicate,
     /// which runs every registered check. Reference:
     /// https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.diagnostics.healthchecks.healthcheckservice.checkhealthasync
     /// </remarks>
@@ -42,7 +42,7 @@ internal sealed class HealthCheckRunner : IHealthCheckRunner
 
     /// <inheritdoc/>
     /// <remarks>
-    /// Calls <see cref="HealthCheckService.CheckHealthAsync(Func{HealthCheckRegistration, bool}, CancellationToken)"/>
+    /// Calls <c>HealthCheckService.CheckHealthAsync(Func&lt;HealthCheckRegistration, bool&gt;, CancellationToken)</c>
     /// with a predicate that filters by <see cref="HealthCheckRegistration.Tags"/>.
     /// Only checks whose tag set contains <paramref name="tag"/> are executed.
     /// Reference: https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.diagnostics.healthchecks.healthcheckservice.checkhealthasync
@@ -54,7 +54,7 @@ internal sealed class HealthCheckRunner : IHealthCheckRunner
 
     /// <inheritdoc/>
     /// <remarks>
-    /// Calls <see cref="HealthCheckService.CheckHealthAsync(Func{HealthCheckRegistration, bool}, CancellationToken)"/>
+    /// Calls <c>HealthCheckService.CheckHealthAsync(Func&lt;HealthCheckRegistration, bool&gt;, CancellationToken)</c>
     /// with a predicate that matches <see cref="HealthCheckRegistration.Name"/> (case-insensitive).
     /// Reference: https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.diagnostics.healthchecks.healthcheckservice.checkhealthasync
     /// </remarks>

@@ -72,7 +72,7 @@ public interface IHealthCheckRunner
     /// </param>
     /// <param name="cancellationToken">Token to cancel the operation.</param>
     /// <remarks>
-    /// Tags are assigned during registration in <see cref="Extensions.HealthCheckExtensions.AddServiceHealthChecks"/>.
+    /// Tags are assigned during registration in <see cref="Company.HealthChecks.Extensions.HealthCheckExtensions.AddServiceHealthChecks"/>.
     /// See "Filter health checks" in the Microsoft docs:
     /// https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks#filter-health-checks
     /// </remarks>

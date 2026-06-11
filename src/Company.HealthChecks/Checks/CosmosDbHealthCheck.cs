@@ -13,11 +13,11 @@ namespace Company.HealthChecks.Checks;
 /// <para>
 /// <see cref="CosmosClient"/> is designed to be a long-lived singleton — creating one per
 /// request is expensive (TCP connections, caches). This class caches clients by connection
-/// string using a <see cref="ConcurrentDictionary{TKey, TValue}"/> so the same client is
+/// string using a <c>ConcurrentDictionary&lt;string, CosmosClient&gt;</c> so the same client is
 /// reused across health check calls.
 /// </para>
 /// <para>
-/// When a <see cref="Models.ServiceHealthCheckOptions.CosmosDbDatabaseName"/> is configured,
+/// When a <see cref="Company.HealthChecks.Models.ServiceHealthCheckOptions.CosmosDbDatabaseName"/> is configured,
 /// the check reads the database record to confirm both network reachability and that the
 /// specific database exists. Without a database name, it reads the account-level metadata.
 /// </para>

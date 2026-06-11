@@ -18,8 +18,8 @@ namespace Company.HealthChecks.Extensions;
 /// <para>
 /// This class uses the standard ASP.NET Core health check pipeline:
 /// <list type="bullet">
-///   <item><see cref="HealthCheckServiceCollectionExtensions.AddHealthChecks"/> registers the framework — https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.healthcheckservicecollectionextensions.addhealthchecks</item>
-///   <item><see cref="HealthCheckEndpointRouteBuilderExtensions.MapHealthChecks"/> maps HTTP endpoints — https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.builder.healthcheckendpointroutebuilderextensions.maphealthchecks</item>
+///   <item><c>AddHealthChecks</c> registers the framework — https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.healthcheckservicecollectionextensions.addhealthchecks</item>
+///   <item><c>MapHealthChecks</c> maps HTTP endpoints — https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.builder.healthcheckendpointroutebuilderextensions.maphealthchecks</item>
 ///   <item><see cref="HealthCheckOptions"/> configures per-endpoint filtering and response writing — https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.diagnostics.healthchecks.healthcheckoptions</item>
 /// </list>
 /// </para>
@@ -50,8 +50,8 @@ public static class HealthCheckExtensions
     /// <para>
     /// <b>On-demand execution only.</b> Checks run when an HTTP endpoint is hit
     /// or <see cref="IHealthCheckRunner"/> is called explicitly. There is no
-    /// background timer or publisher registered — see
-    /// <see cref="IHealthCheckPublisherHostedService"/> if you need polling:
+    /// background timer or publisher registered — see <c>IHealthCheckPublisher</c>
+    /// if you need periodic polling:
     /// https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.diagnostics.healthchecks.ihealthcheckpublisher
     /// </para>
     /// <para>
@@ -124,8 +124,8 @@ public static class HealthCheckExtensions
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Uses <c>MapHealthChecks</c> from the ASP.NET Core routing system to bind
-    /// each path to a filtered subset of the registered checks.
+    /// Uses <c>MapHealthChecks(string pattern, HealthCheckOptions options)</c> from the
+    /// ASP.NET Core routing system to bind each path to a filtered subset of registered checks.
     /// Reference: https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.builder.healthcheckendpointroutebuilderextensions.maphealthchecks
     /// </para>
     /// <para>
